@@ -1,12 +1,34 @@
 #include <iostream>
 
+#include<vector>
+#include<boost/filesystem/path.hpp>
+#include<boost/filesystem/operations.hpp>
+
+namespace bfs = boost::filesystem;
+
+using path = bfs::path;
+using paths = std::vector<bfs::path>;
+
 int main(int argc, char** argv){
-    
+
+    paths a_includes;
+    a_includes.push_back("/home/daniil/1_");
+    a_includes.push_back("/home/daniil/2_");
+    for(auto& inc_path:a_includes){
+        if(bfs::exists(inc_path)&&bfs::is_directory(inc_path)){
+            bfs::recursive_directory_iterator iter(inc_path), end;
+            while(iter!=end){
+                std::cout<<iter.level()<<" - "<<iter.depth()<<" - "<<iter->path();
+            }
+        }
+    }
+
+
     return 0;
 }
 
 // Цепочка ответственности (Chain of responsibilily)
-
+/*
 #include <iostream>
 #include <string>
 
@@ -86,3 +108,4 @@ int main(int, char *[])
 
     return 0;
 }
+*/
